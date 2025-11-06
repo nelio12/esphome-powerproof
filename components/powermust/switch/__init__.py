@@ -53,19 +53,22 @@ PIPSWITCH_SCHEMA = switch.switch_schema(
 ).extend(cv.COMPONENT_SCHEMA)
 
 
+# === Validación de comandos personalizados ===
 def validate_shutdown_command(config):
-    """Valida que S<n> y S<n>R<m> tengan formato correcto"""
-    type_ = config["type"]
-    if type_ == CONF_SHUTDOWN:
-        cmd = config.get("on_command", "S05")
-        if not (cmd.startswith("S") and len(cmd) == 3 and cmd[1:].isdigit()):
-            raise cv.Invalid(f"shutdown: comando debe ser S + 2 dígitos (ej: S05), recibido: {cmd}")
-    elif type_ == CONF_SHUTDOWN_RESTORE:
-        cmd = config.get("on_command", "S05R0030")
+    # config es el bloque completo de powermust
+    if CONF_SHUTDOWN in config:
+        shutdown_conf = config[CONF_SHUTDOWN]
+        cmd = shutdown_conf.get("on_command", "S05")
+        if not (len(cmd) == 3 and cmd.startswith("S") and cmd[1:].isdigit()):
+            raise cv.Invalid(f"shutdown: debe ser S + 2 dígitos (ej: S05), recibido: {cmd}")
+    
+    if CONF_SHUTDOWN_RESTORE in config:
+        restore_conf = config[CONF_SHUTDOWN_RESTORE]
+        cmd = restore_conf.get("on_command", "S05R0030")
         if not (cmd.startswith("S") and "R" in cmd and len(cmd) >= 6):
             raise cv.Invalid(f"shutdown_restore: debe ser S<n>R<m> (ej: S05R0030), recibido: {cmd}")
+    
     return config
-
 
 CONFIG_SCHEMA = POWERMUST_COMPONENT_SCHEMA.extend(
     {cv.Optional(type): PIPSWITCH_SCHEMA for type in TYPES}
