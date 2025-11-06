@@ -6,7 +6,6 @@ from esphome.const import (
     CONF_NAME,
     ICON_POWER,
     ICON_TIMER,
-    ICON_CANCEL,
 )
 
 from .. import CONF_POWERMUST_ID, POWERMUST_COMPONENT_SCHEMA, powermust_ns
