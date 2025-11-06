@@ -50,7 +50,6 @@ PowermustSwitch = powermust_ns.class_("PowermustSwitch", switch.Switch, cg.Compo
 PIPSWITCH_SCHEMA = switch.switch_schema(
     PowermustSwitch,
     block_inverted=True,
-    default_icon=lambda conf: ICONS.get(conf["type"], ICON_POWER)
 ).extend(cv.COMPONENT_SCHEMA)
 
 
