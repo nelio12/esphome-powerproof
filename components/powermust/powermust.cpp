@@ -265,6 +265,23 @@ if (this->state_ == STATE_COMMAND_COMPLETE) {
         this->state_ = STATE_IDLE;
         break;
     }
+    case POLLING_I: {
+  ESP_LOGD(TAG, "Decode I");
+  char tmp[POWERMUST_READ_BUFFER_LENGTH];
+  strncpy(tmp, (const char*)this->read_buffer_, this->read_pos_);
+  tmp[this->read_pos_] = '\0';
+
+  // Eliminar \r
+  char *cr = strchr(tmp, '\r');
+  if (cr) *cr = '\0';
+
+  if (this->ups_info_) {
+    this->ups_info_->publish_state(tmp);
+  }
+
+  this->state_ = STATE_POLL_DECODED;
+  break;
+}
     return;
   }
 
