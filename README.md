@@ -40,7 +40,7 @@ ESPHome component to monitor and control any Megatec Protocol based UPS via UART
 You can install this component with [ESPHome external components feature](https://esphome.io/components/external_components.html) like this:
 ```yaml
 external_components:
-  - source: github://nelio12/esphome-megatec-ups@main
+  - source: github://AvenproTeam/esphome-megatec-ups@main
 ```
 
 or just use the `esp32-example.yaml` as proof of concept:
@@ -50,7 +50,7 @@ or just use the `esp32-example.yaml` as proof of concept:
 pip3 install esphome
 
 # Clone this external component
-git clone https://github.com/nelio12/esphome-megatec-ups.git
+git clone https://github.com/AvenproTeam/esphome-megatec-ups.git
 cd esphome-powermust
 
 # Create a secrets.yaml containing some setup specific secrets
